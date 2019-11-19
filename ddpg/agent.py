@@ -28,8 +28,6 @@ class Agent():
                 - "random_seed": random seed
                 - "gamma": discount factor
                 - "tau": for soft update of target parameters
-                - "lr_actor": learning rate of the actor 
-                - "lr_critic": learning rate of the critic
                 - "weight_decay": L2 weight decay
                 - "learn_every": learn from replay buffer every time step
                 - "learn_batch_size": number of batches to learn from replay buffer every learn_every time step
@@ -42,6 +40,12 @@ class Agent():
                 - "mu": mu for noise
                 - "theta": theta for noise 
                 - "sigma": sigma for noise
+                - "actor": actor specific config object
+                    - "fc":  array of input sizes for hidden layers
+                    - "learning_rate": learning rate 
+                - "critic": actor specific config object
+                    - "fc":  array of input sizes for hidden layers
+                    - "learning_rate": learning rate
         """
         self.num_agents = config['num_agents']
         self.state_size = config['state_size']
@@ -60,21 +64,21 @@ class Agent():
         self.batch_size = config['batch_size']
         self.gamma = config['gamma']
         self.tau = config['tau']
-        self.lr_actor = config['lr_actor']
-        self.lr_critic = config['lr_critic']
+        self.lr_actor = config['actor']['learning_rate']
+        self.lr_critic = config['critic']['learning_rate']
         self.weight_decay = config['weight_decay']
         self.learn_every = config['learn_every']
         self.learn_batch_size = config['learn_batch_size']
         self.grad_clip = config['grad_clip']
         
         # Actor Network (w/ Target Network)
-        self.actor_local = Actor(self.state_size, self.action_size, config['random_seed']).to(self.device)
-        self.actor_target = Actor(self.state_size, self.action_size, config['random_seed']).to(self.device)
+        self.actor_local = Actor(config).to(self.device)
+        self.actor_target = Actor(config).to(self.device)
         self.actor_optimizer = optim.Adam(self.actor_local.parameters(), lr=self.lr_actor)
 
         # Critic Network (w/ Target Network)
-        self.critic_local = Critic(self.state_size, self.action_size, config['random_seed']).to(self.device)
-        self.critic_target = Critic(self.state_size, self.action_size, config['random_seed']).to(self.device)
+        self.critic_local = Critic(config).to(self.device)
+        self.critic_target = Critic(config).to(self.device)
         self.critic_optimizer = optim.Adam(self.critic_local.parameters(), lr= self.lr_critic, weight_decay=self.weight_decay)
 
         # Noise process

@@ -13,6 +13,31 @@ This yields a single score for each episode.
 The environment is considered solved, when the average (over 100 episodes) of those scores is at least +0.5.
 
 ### Folder Structure
+```
+.
+├── LICENSE
+├── README.md                   # This file    
+├── Report.ipynb                # Notebook with runner        
+├── Report.pdf                  # pdf export of the runner's last run
+├── Tennis.ipynb                # Original notebook
+├── buffers                     # ddpg agent folder
+│   ├── __init__.py             # init file to make buffers a package
+│   └── replaybuffer.py         # code file for memory buffer
+├── checkpoint_actor.pth        # Save weights file of Actor
+├── checkpoint_critic.pth       # Save weights file of Critic
+├── ddpg                        # ddpg agent folder
+│   ├── __init__.py             # init file to make ddpg a package
+│   ├── agent.py                # agent implementation
+│   └── model.py                # model file for Actor and Critic
+├── python  
+│   ├── ....                    # files related to dependencies installation on Udacity workspace
+└── unity_environments          # repo contains various environments for single and multiple agents on different OS
+    ├── Tennis.app
+    ├── Tennis_Linux
+    ├── Tennis_Windows_x86
+    ├── Tennis_Windows_x86_64
+    └── unity-environment.log
+```
 
 ## Introduction
 
@@ -33,11 +58,11 @@ This project specific packages for execution and the versions are locked down to
 
 #### Create the Conda environment
 
-Run `conda create --name drlnd-p2 python=3.6` (This is only ran once on every host)
+Run `conda create --name drlnd-p3 python=3.6` (This is only ran once on every host)
 
 #### Activate the Conda environment
 
-Run `conda activate --name drlnd-p2` (This is ran everytime before activating the Jupyter Notebook server)
+Run `conda activate --name drlnd-p3` (This is ran everytime before activating the Jupyter Notebook server)
 
 #### Install the require Python packages
 
